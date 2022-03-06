@@ -1,0 +1,19 @@
+spring:
+  profiles.active: local
+  thymeleaf.cache: false # HTML 변경사항을 실시간으로 확인하기위해 Cache 비활성화
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ENC(IhNE40zylb5EQ7HNKSEipxffXNAkxdbdWzXciRs4hXw=)
+    password: ENC(z1mcfhTLhP/ypgfC2gxCNWrxnyUjQwqpFnAsG2vct4w=)
+    properties:
+      mail:
+        smtp:
+          auth: true
+          timeout: 5000
+          starttls.enable: true
+
+jasypt:
+  encryptor: # 암호는 Intellij VM Options -Djasypt.encryptor.password= 또는 ${시스템_환경변수}로 저장
+    bean: jasyptStringEncryptor # 등록된 빈 이름
