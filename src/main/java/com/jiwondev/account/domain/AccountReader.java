@@ -4,7 +4,9 @@ public interface AccountReader {
 
     Account findByEmail(String email);
 
-    boolean existByEmail(String email);
+    boolean existsByEmail(String email);
 
-    boolean existByNickname(String nickname);
+    boolean existsByNickname(String nickname);
+
+    long count();
 }

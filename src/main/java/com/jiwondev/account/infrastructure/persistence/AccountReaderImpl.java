@@ -13,18 +13,23 @@ public final class AccountReaderImpl implements AccountReader {
     private final JpaAccountRepository repository;
 
     @Override
+    public long count() {
+        return repository.count();
+    }
+
+    @Override
     public Account findByEmail(String email) {
         return repository.findByEmail(email)
             .orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
-    public boolean existByEmail(String email) {
-        return false;
+    public boolean existsByEmail(String email) {
+        return repository.existsByEmail(email);
     }
 
     @Override
-    public boolean existByNickname(String nickname) {
-        return false;
+    public boolean existsByNickname(String nickname) {
+        return repository.existsByNickname(nickname);
     }
 }
