@@ -1,6 +1,7 @@
 package com.jiwondev.account.application;
 
 import com.jiwondev.account.domain.dto.AccountRegisterCommand;
+import com.jiwondev.account.interfaces.RegisterConfirmResponse;
 import com.jiwondev.account.interfaces.SignUpForm;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
@@ -14,4 +15,6 @@ import org.mapstruct.ReportingPolicy;
 public interface AccountMapper {
 
     AccountRegisterCommand toCommand(SignUpForm form);
+
+    RegisterConfirmResponse toResponse(String nickname, long count);
 }
