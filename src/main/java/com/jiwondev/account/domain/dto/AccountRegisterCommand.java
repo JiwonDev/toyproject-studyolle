@@ -6,7 +6,7 @@ public final class AccountRegisterCommand {
     private String email;
     private String password;
 
-    public AccountRegisterCommand(String nickname, String email, String password) {
+    public AccountRegisterCommand(String email, String nickname, String password) {
         this.nickname = nickname;
         this.email = email;
         this.password = password;

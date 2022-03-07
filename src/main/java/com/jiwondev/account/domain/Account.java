@@ -12,7 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.Hibernate;
@@ -47,13 +46,9 @@ public class Account {
 
     private String occupation; // 직업
     private String location; // 사는 곳
-    /*
-     * String 은 CLOB 으로 매핑된다.
-     * profileImage 링크는 DB varchar(255)를 넘을 수 있기 때문에, @Lob 을 사용한다.
-     *
-     */
+
     @Lob
-    @Basic(fetch = FetchType.EAGER)
+    @Basic(fetch = FetchType.EAGER) // profileImage 링크는 DB varchar(255)를 넘을 수 있기 때문에, @Lob 을 사용한다.
     private String profileImage;
     @CreationTimestamp
     private LocalDateTime joinedAt;
@@ -66,22 +61,40 @@ public class Account {
     private boolean studyUpdatedByEmail;
     private boolean studyUpdatedByWeb;
 
-    @Builder
-    private Account(Long id, String email, String nickname, String password,
-        boolean studyCreatedByWeb,
-        boolean studyEnrollmentResultByWeb, boolean studyUpdatedByWeb) {
-        this.id = id;
+    private Account(String email, String nickname, String password) {
         this.email = email;
         this.nickname = nickname;
         this.password = password;
-        this.studyCreatedByWeb = studyCreatedByWeb;
-        this.studyEnrollmentResultByWeb = studyEnrollmentResultByWeb;
-        this.studyUpdatedByWeb = studyUpdatedByWeb;
+
     }
 
-    public void generateEmailCheckToken() {
+    public static Account createByWeb(String email, String nickname, String password) {
+        var account = new Account(email, nickname, password);
+        account.studyCreatedByWeb = true;
+        account.studyEnrollmentResultByWeb = true;
+        account.studyUpdatedByWeb = true;
+        account.generateEmailCheckToken();
+        return account;
+    }
+
+    public static Account of(String email, String nickname, String password) {
+        var account = new Account(email, nickname, password);
+        account.generateEmailCheckToken();
+        return account;
+    }
+
+    private void generateEmailCheckToken() {
         this.emailCheckToken = UUID.randomUUID().toString();
         this.emailCheckTokenGeneratedAt = LocalDateTime.now();
+    }
+
+    public void confirmEmail() {
+        this.emailVerified = true;
+        this.joinedAt = LocalDateTime.now();
+    }
+
+    public boolean isValidEmailToken(String token) {
+        return this.getEmailCheckToken().equals(token);
     }
 
     @Override
@@ -89,8 +102,7 @@ public class Account {
         if (this == o) {
             return true;
         }
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(
-            o)) {
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
             return false;
         }
         Account account = (Account) o;
