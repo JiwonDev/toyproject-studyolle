@@ -2,6 +2,7 @@ package com.jiwondev.account.infrastructure;
 
 import java.io.InputStream;
 import javax.mail.internet.MimeMessage;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
@@ -10,6 +11,7 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Component;
 
 @Profile("local")
+@Slf4j
 @Component
 public final class ConsoleMailSender implements JavaMailSender {
 
@@ -45,7 +47,7 @@ public final class ConsoleMailSender implements JavaMailSender {
 
     @Override
     public void send(SimpleMailMessage simpleMessage) throws MailException {
-
+        log.info("Console Mail: {}", simpleMessage.getText());
     }
 
     @Override
