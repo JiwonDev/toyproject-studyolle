@@ -2,7 +2,6 @@ package com.jiwondev.account.infrastructure.validator;
 
 import com.jiwondev.account.domain.AccountReader;
 import com.jiwondev.account.interfaces.SignUpForm;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
