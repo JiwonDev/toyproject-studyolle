@@ -3,11 +3,11 @@ package com.jiwondev.account.domain;
 import com.jiwondev.account.domain.exception.InvalidEmailException;
 import com.jiwondev.account.domain.exception.InvalidEmailTokenException;
 
-public final class ConfirmRegisterAccountProcessor {
+public final class RegisterEmailConfirmProcessor {
 
     private final AccountReader accountReader;
 
-    public ConfirmRegisterAccountProcessor(AccountReader accountReader) {
+    public RegisterEmailConfirmProcessor(AccountReader accountReader) {
         this.accountReader = accountReader;
     }
 

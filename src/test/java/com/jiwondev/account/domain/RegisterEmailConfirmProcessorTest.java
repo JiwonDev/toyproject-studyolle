@@ -12,13 +12,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 
-final class ConfirmRegisterAccountProcessorTest {
+final class RegisterEmailConfirmProcessorTest {
 
     @TestFactory
     @DisplayName("회원가입 이메일 검증 도메인 서비스 테스트")
-    Collection<DynamicTest> register() {
+    Collection<DynamicTest> 이메일_검증_도메인_서비스() {
         var repository = new FakeAccountRepository();
-        var processor = new ConfirmRegisterAccountProcessor(repository);
+        var processor = new RegisterEmailConfirmProcessor(repository);
 
         var savedAccount = repository.save(
             Account.of("email3383@naver.com", "nickname2", "password!"));

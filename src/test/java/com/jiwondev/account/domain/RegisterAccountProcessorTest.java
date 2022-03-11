@@ -16,7 +16,7 @@ final class RegisterAccountProcessorTest {
 
     @TestFactory
     @DisplayName("회원가입 도메인 서비스 테스트")
-    Collection<DynamicTest> register() {
+    Collection<DynamicTest> 회원가입_도메인_서비스() {
         var repository = new FakeAccountRepository();
         var processor = new RegisterAccountProcessor(repository, repository,
             new StubPasswordEncoder());

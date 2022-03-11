@@ -1,5 +1,7 @@
 package com.jiwondev.interfaces;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.then;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -17,12 +19,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-/*
-통합테스트는 SpringBootTest 를 사용한다.
-만약 MockMvc 가 필요하다면 @AutoConfigureMockMvc 를 추가하면 된다.
- */
 @WebMvcTest(AccountController.class)
 final class AccountControllerTest {
+// MockMvc 가 필요하다면 @AutoConfigureMockMvc 를 추가하면 된다.
 
     @Autowired
     private MockMvc mockMvc;
@@ -31,10 +30,10 @@ final class AccountControllerTest {
     private AccountFacade accountFacade;
 
     @MockBean
-    private SignUpFormValidator validator;
+    private SignUpFormValidator validator; // Controller 에 사용된 Bean Validator 객체
 
     @Test
-    @DisplayName("회원가입 sign-up 화면이 반환되는지 테스트한다.")
+    @DisplayName("회원가입 뷰가 정상 반환된다.")
     void 요청_회원가입_입력폼() throws Exception {
         var actions = mockMvc.perform(get("/sign-up"));
 
@@ -42,6 +41,8 @@ final class AccountControllerTest {
             .andExpect(status().isOk())
             .andExpect(model().attributeExists("signUpForm"))
             .andExpect(view().name("account/sign-up"));
+
+        then(accountFacade).shouldHaveNoInteractions();
     }
 
     @Test
@@ -57,6 +58,8 @@ final class AccountControllerTest {
         actions
             .andExpect(status().is3xxRedirection())
             .andExpect(view().name("redirect:/"));
+
+        then(accountFacade).should().register(any());
     }
 
     @Test

@@ -3,8 +3,8 @@ package com.jiwondev.account.application;
 import com.jiwondev.account.domain.Account;
 import com.jiwondev.account.domain.AccountMailManager;
 import com.jiwondev.account.domain.AccountReader;
-import com.jiwondev.account.domain.ConfirmRegisterAccountProcessor;
 import com.jiwondev.account.domain.RegisterAccountProcessor;
+import com.jiwondev.account.domain.RegisterEmailConfirmProcessor;
 import com.jiwondev.account.domain.dto.AccountRegisterCommand;
 import com.jiwondev.account.interfaces.RegisterConfirmResponse;
 import com.jiwondev.account.interfaces.SignUpForm;
@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AccountFacade {
 
     private final RegisterAccountProcessor registerAccountProcessor;
-    private final ConfirmRegisterAccountProcessor confirmRegisterAccountProcessor;
+    private final RegisterEmailConfirmProcessor confirmRegisterAccountProcessor;
     private final AccountMailManager accountMailManager;
     private final AccountReader accountReader;
     private final AccountMapper mapper;
